@@ -25,11 +25,11 @@ export async function GET(request: Request) {
         complete: true
       },
       {
-        description: 'Evagenlio de San Juan',
+        description: 'Génesis',
         complete: true
       },
       {
-        description: 'Evagenlio de San Juan',
+        description: 'Éxodo',
         complete: true
       },
       {
