@@ -1,13 +1,32 @@
-import Link from "next/link";
-import { CiBookmarkCheck } from "react-icons/ci";
+'use client';
 
-export default function SidebarItem() {
-    return (
-        <li>
-            <Link href="#" className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
-                <CiBookmarkCheck size={30} />
-                <span className="group-hover:text-gray-700">Categories</span>
-            </Link>
-        </li>
-    )
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+interface Props {
+  icon:  React.ReactNode;
+  path:  string;
+  title: string;
+}
+
+
+export const SidebarItem = ({ icon, path, title }: Props ) => {
+
+  const pathName = usePathname();
+
+
+  {/* Active className: text-white bg-gradient-to-r from-sky-600 to-cyan-400 */}
+  return (
+    <li>
+      <Link href={ path } className={`
+        px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group
+        hover:bg-linear-to-r hover:bg-sky-600 hover:text-white
+        ${ path === pathName ? 'text-bl bg-linear-to-r from-sky-600 to-cyan-400': '' }
+      `}>
+        { icon }
+        <span className="group-hover:text-white-700">{ title }</span>
+      </Link>
+    </li>
+  )
 }
