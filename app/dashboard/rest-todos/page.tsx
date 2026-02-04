@@ -2,7 +2,7 @@
 //'use client';
 
 import prisma from "@/app/lib/prisma";
-import { TodosGrid } from "@/app/todos";
+import { NewTodo, TodosGrid } from "@/app/todos";
 //import { title } from "process";
 //import { useEffect } from "react";
 
@@ -21,6 +21,10 @@ export default async function RestTodosPage() {
 
   return (
     <div>
+      <div className="w-full px-6 mx-5 mb-5 bg-white">
+        <NewTodo></NewTodo>
+      </div>
+      
       <TodosGrid todos={todos}></TodosGrid>
     </div>
   );
