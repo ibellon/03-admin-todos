@@ -66,3 +66,20 @@ Then, define your models in prisma/schema.prisma and run prisma migrate dev to a
 Learn more: https://pris.ly/getting-started
 ```
 
+## Guía de Primeros Auxilios Prisma
+
+1. npx prisma generate: Regenera el cliente de TypeScript en node_modules. Hazlo siempre que cambies el schema.prisma.
+
+2. npx prisma db push: Fuerza a la base de datos a tener las tablas que dice tu esquema. Es ideal para desarrollo (en producción usarás prisma migrate dev).
+
+3. rm -rf .next: Borra la caché de compilación de Next.js. Es la culpable de que errores viejos sigan saliendo aunque ya hayas corregido el código.
+
+4. npx prisma studio: (Extra) Te abre una interfaz web para ver y editar tus datos manualmente. Muy útil para comprobar si el findMany falla por falta de datos o por código.
+
+5. Archivo .env: Debe estar en la raíz del proyecto. Sin la variable DATABASE_URL, nada de lo anterior funcionará.
+
+6. Singleton de Prisma: El archivo lib/prisma.ts TIENE que usar el objeto global para no saturar las conexiones de la base de datos durante el desarrollo.
+
+7. Schema Limpio: El bloque generator client no debe tener un output personalizado a menos que sepas muy bien lo que haces; mejor dejar que Prisma se guarde en su sitio por defecto (node_modules).
+
+
