@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { IoTrashOutline } from "react-icons/io5";
+import { addTodoService, borrarTodoService } from "../actions/todo-action";
 import * as todosApi from "../helpers/todos"
 
 
@@ -16,15 +17,16 @@ export const NewTodo = () => {
   const onSubmit = async(e: FormEvent) => {
     e.preventDefault();
     if(description.trim().length == 0) return;
-    await todosApi.createTodo(description)
+    //await todosApi.createTodo(description)
+    await addTodoService(description)
     setDescription('');
-    router.refresh();
+    //router.refresh();
   }
 
-  const deleteCompleted = async() => {
-    await todosApi.borrarMarcados();
-    router.refresh();
-  }
+  // const deleteCompleted = async() => {
+  //   await todosApi.borrarMarcados();
+  //   router.refresh();
+  // }
 
   return (
     <form onSubmit={ onSubmit }  className='flex w-full'>
@@ -41,7 +43,7 @@ export const NewTodo = () => {
       <span className='flex flex-1'></span>
 
       <button 
-        onClick={ () => deleteCompleted() }
+        onClick={ () => borrarTodoService() }
         type='button' className="flex items-center justify-center rounded ml-2 bg-red-400 p-2 text-white hover:bg-red-700 transition-all">
         <IoTrashOutline />
         Borrar Lectura
