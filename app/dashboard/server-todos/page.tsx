@@ -1,5 +1,7 @@
 
 //'use client';
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 import prisma from "@/app/lib/prisma";
 import { NewTodo, TodosGrid } from "@/app/todos";
@@ -15,6 +17,8 @@ export const metadata = {
 export default async function ServerTodosPage() {
 
   const todos = await prisma.todo.findMany({ orderBy: {description: 'asc'}})
+
+  console.log("construido ServerTodosPage")
 
   return (
     <>

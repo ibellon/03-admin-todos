@@ -13,7 +13,7 @@ export const sleep = async(seconds:number = 0) => {
 }
 
 export const updateTodoService = async (id:string, complete:boolean): Promise<Todo> => {
-    
+
     await sleep(3)
 
     const todo = await prisma.todo.findFirst({where: {id}})
@@ -22,25 +22,25 @@ export const updateTodoService = async (id:string, complete:boolean): Promise<To
         throw `Todo con id ${id} no encontrado`
     }
 
-    const updateTodoService = await prisma.todo.update({
+    const updateTodo = await prisma.todo.update({
         where: {id},
         data: {complete: complete}
     })
 
-    revalidatePath("/dashboard/server-todos")
+    revalidatePath("/dashboard", "layout"); 
 
-    return updateTodoService
+    return updateTodo
 }
 
 export const addTodoService = async(description:string): Promise<Todo|any> => {
     try {
-        const addTodoService = await prisma.todo.create({
+        const addTodo = await prisma.todo.create({
             data: {description}
         })
 
-        revalidatePath("/dashboard/server-todos")
+        revalidatePath("/dashboard", "layout"); 
 
-        return addTodoService;
+        return addTodo;
     }
     catch(error) {
         return {
@@ -52,13 +52,13 @@ export const addTodoService = async(description:string): Promise<Todo|any> => {
 export const borrarTodoService = async(): Promise<Todo|any> => {
     try {
        
-        const borrarTodoService = await prisma.todo.deleteMany({
+        const borrarTodo = await prisma.todo.deleteMany({
             where: {complete: true },
         })
 
-        revalidatePath("/dashboard/server-todos")
-        
-        return borrarTodoService;
+        revalidatePath("/dashboard", "layout"); 
+
+        return borrarTodo;
     }
     catch(error) {
         return {
