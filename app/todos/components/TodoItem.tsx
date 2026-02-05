@@ -35,7 +35,7 @@ export const TodoItem = ({todo, completar}:Props) => {
     }
 
     return (
-        <div className={todo.complete ? styles.todoDone: styles.todoPending}>
+        <div className={todoOptimistic.complete ? styles.todoDone: styles.todoPending}>
             <div className="flex flex-col sm:flex-row justify-start items-center gap-4">
                
                <div 
