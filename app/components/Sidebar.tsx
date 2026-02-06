@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { CiLogout } from 'react-icons/ci';
 import { SidebarItem } from './SidebarItem';
-import { IoCalendarOutline, IoCheckboxOutline, IoCompassOutline, IoListOutline } from 'react-icons/io5';
+import { IoBasketOutline, IoCalendarOutline, IoCheckboxOutline, IoCompassOutline, IoListOutline } from 'react-icons/io5';
 
 const menuItems = [
   {
@@ -25,6 +25,11 @@ const menuItems = [
     title: 'Cookies',
     path: '/dashboard/cookies'
   },
+  {
+    icon: <IoBasketOutline />,
+    title: 'Productos',
+    path: '/dashboard/products'
+  },
 ]
 
 
@@ -39,8 +44,8 @@ export const Sidebar = () => {
             <Image src="https://cdn.pixabay.com/photo/2016/10/25/21/39/logo-1770072_1280.png" 
               className="w-32" 
               alt="tailus logo" 
-              width={100}
-              height={100}
+              width={50}
+              height={50}
             />
           </Link>
         </div>
@@ -49,16 +54,16 @@ export const Sidebar = () => {
          
           <Image 
             src="https://cdn.pixabay.com/photo/2012/04/24/12/29/argentina-39770_1280.png" 
-            width={200}
-            height={200}
+            width={70}
+            height={70}
             alt="" 
             className="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28" 
           />
-          <h5 className="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">Isidro Bellón Cano</h5>
+          <h6 className="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">Isidro Bellón Cano</h6>
           <span className="hidden text-gray-400 lg:block">Software Analyst</span>
         </div>
 
-        <ul className="space-y-2 tracking-wide mt-8">
+        <ul className="space-y-0 tracking-wide mt-8">
           {
             menuItems.map( item => (
               <SidebarItem key={ item.path } {...item} />
