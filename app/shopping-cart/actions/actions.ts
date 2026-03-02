@@ -1,5 +1,6 @@
 import { deleteCookie, getCookie, hasCookie, setCookie } from "cookies-next";
 import { number } from "yup";
+import { ItemCart } from '../components/ItemCart';
 
 export const getCookieCart = ():{ [id:string]:number } => {
 
@@ -29,8 +30,23 @@ export const addProductToCart = (id:string) => {
 }
 
 export const removeProductFromCart = (id:string) => {
-    const cookieCart = getCookieCart();
+    var cookieCart = getCookieCart();
     cookieCart[id] = 0;
-    //deleteCookie(cookieCart[id] as any)
     setCookie("cart", JSON.stringify(cookieCart))
+}
+
+export const removeSingleItemFromCart = (id:string) => {
+    var cookieCart = getCookieCart();
+    if(!cookieCart[id]) return;
+
+    const itemsInCart = cookieCart[id] - 1;
+
+    if(itemsInCart <= 0) {
+        delete cookieCart[id];
+    }
+    else {
+        cookieCart[id] = itemsInCart;
+    }
+
+    setCookie("cart", JSON.stringify(cookieCart))    
 }
