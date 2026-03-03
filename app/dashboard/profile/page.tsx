@@ -13,7 +13,7 @@ const {data: session} = useSession();
 
   return (
     <div>
-      <h1 className="h-10 text-2xl">Profile Page</h1>
+      <h1 className="h-10 text-2xl">Usuario desde el Cliente</h1>
       <hr></hr>
       <div className="flex flex-col">
         <span>{session?.user?.name ?? 'No name'}</span>
