@@ -82,4 +82,5 @@ Learn more: https://pris.ly/getting-started
 
 7. Schema Limpio: El bloque generator client no debe tener un output personalizado a menos que sepas muy bien lo que haces; mejor dejar que Prisma se guarde en su sitio por defecto (node_modules).
 
+8. You can run npx auth secret - our CLI - in your project's root, and it will autogenerate a random value and put it in your .env.local file.
 
