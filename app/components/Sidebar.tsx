@@ -47,6 +47,8 @@ export const Sidebar = async () => {
 
   const userName = session?.user?.name ?? "No name";
 
+  const userRoles = session?.user?.roles ?? ['Client'];
+
   const avatarUrl = session?.user?.image ? session.user.image : 'https://cdn.pixabay.com/photo/2016/10/25/21/39/logo-1770072_1280.png'
 
   return (
@@ -75,7 +77,10 @@ export const Sidebar = async () => {
             className="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28" 
           />
           <h6 className="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">{ userName }</h6>
-          <span className="hidden text-gray-400 lg:block">Software Analyst</span>
+          
+          <span className="hidden text-gray-400 lg:block capitalize">
+            {userRoles.join(',')}
+          </span>
         </div>
 
         <ul className="space-y-0 tracking-wide mt-8">
