@@ -4,7 +4,9 @@ import NextAuth, { User } from "next-auth"
 import { Adapter } from "next-auth/adapters"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
-import { signIn } from "next-auth/react"
+import CredentialsProvider from "next-auth/providers/credentials";
+import { signInEmailPassword } from "../actions/auth-actions"
+
 
 export const authOptions = {
 
@@ -14,12 +16,44 @@ export const authOptions = {
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? '',
       clientSecret: process.env.GITHUB_SECRET ?? '',
+      authorization: {
+        params: {
+          prompt: "login", // Fuerza a Github a pedir login de nuevo
+        }
+      },
       allowDangerousEmailAccountLinking: true
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
+      authorization: {
+        params: {
+          prompt: "select_account", // Fuerza a elegir cuenta de Google
+          access_type: "offline",
+          response_type: "code"
+        }
+      },
       allowDangerousEmailAccountLinking: true
+    }),
+    
+    CredentialsProvider({
+      // The name to display on the sign in form (e.g. "Sign in with...")
+      name: "Credentials",
+      credentials: {
+        email: { label: "Correo", type: "email", placeholder: "jsmith" },
+        password: { label: "Contraseña", type: "password", placeholder: "******" }
+      },
+      async authorize(credentials, req) {
+        // Add logic here to look up the user from the credentials supplied
+        const user = await signInEmailPassword(credentials!.email, credentials!.password);
+
+        if (user) {
+          // Any object returned will be saved in `user` property of the JWT
+          return user
+        }
+          // If you return null then an error will be displayed advising the user to check their details.
+          return null
+      }
     }),
     // ...add more providers here
   ],
@@ -40,7 +74,7 @@ export const authOptions = {
         await prisma.user.findUnique({where:{email: token.email ?? 'No-email'}})
       
       if(!dbUser?.isActive) {
-        throw 'El Usuario no está activo';
+        //throw 'El Usuario no está activo';
       } 
 
       token.roles = dbUser?.roles ?? 'No-roles';  

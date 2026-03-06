@@ -79,7 +79,7 @@ export const Sidebar = async () => {
           <h6 className="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">{ userName }</h6>
           
           <span className="hidden text-gray-400 lg:block capitalize">
-            {userRoles.join(',')}
+            {userRoles}
           </span>
         </div>
 

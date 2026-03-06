@@ -20,7 +20,7 @@ const {data: session} = useSession();
         <span>{session?.user?.email ?? 'No email'}</span>
         <span>{session?.user?.image ?? 'No image'}</span>
         <span>{session?.user?.id ?? 'No UUDI'}</span>
-        <span>{session?.user?.roles?.join(',') ?? ['No roles']}</span>
+        <span>{session?.user?.roles ?? ['No roles']}</span>
       </div>
     </div>
   );
