@@ -1,6 +1,7 @@
 import prisma from '@/app/lib/prisma';
 import { NextResponse } from 'next/server'
 import { boolean, object, string } from 'yup'
+import { getUserSessionServer } from '../../auth/actions/auth-actions';
 
 interface Segments {
   params: Promise<{ id: string }>;
@@ -43,6 +44,13 @@ export async function PUT(request: Request, {params}: Segments) {
  
 }
 async function getTodo(id:string, params:any) {
+
+  const user = await getUserSessionServer();
+  
+    if(!user) {
+      return null;
+    }
+
   const todo = await prisma.todo.findFirst({
     where: {id}
   })
@@ -52,5 +60,10 @@ async function getTodo(id:string, params:any) {
       message: 'No existe el registro con ID: '+id
     }, {status: 404})
   }
+
+  if(todo.userId !== user.id) {
+    return null;
+  }
+
   return todo;
 }

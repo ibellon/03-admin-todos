@@ -1,6 +1,7 @@
 import prisma from '@/app/lib/prisma'
 import { NextResponse, NextRequest } from 'next/server'
 import { boolean, object, string } from 'yup'
+import { getUserSessionServer } from '../auth/actions/auth-actions'
 
 export async function GET(request: Request) { 
 
@@ -34,12 +35,19 @@ const postSchema = object({
 })
 
 export async function POST(request: Request) { 
+
+  const user = await getUserSessionServer();
+
+  if(!user) {
+    return NextResponse.json("No Autorizado", {status: 401});
+  }
+
   try {
         const { description, complete} = 
         postSchema.validateSync( await request.json() );
         
         const todos = await prisma.todo.create({
-            data: { complete, description },
+            data: { complete, description, userId: user.id },
         })
     
         return NextResponse.json(todos)
@@ -49,10 +57,17 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) { 
+
+  const user = await getUserSessionServer();
+
+  if(!user) {
+    return NextResponse.json("No Autorizado", {status: 401});
+  }
+
   try {
         
         const todos = await prisma.todo.deleteMany({
-            where: {complete: true },
+            where: {complete: true, userId: user.id },
         })
     
         return NextResponse.json("Borrados")

@@ -17,10 +17,10 @@ export const NewTodo = () => {
   const onSubmit = async(e: FormEvent) => {
     e.preventDefault();
     if(description.trim().length == 0) return;
-    //await todosApi.createTodo(description)
-    await addTodoService(description)
+    await todosApi.createTodo(description)
+    //await addTodoService(description, user.id)
     setDescription('');
-    //router.refresh();
+    router.refresh();
   }
 
   // const deleteCompleted = async() => {
