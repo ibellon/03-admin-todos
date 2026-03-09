@@ -1,10 +1,18 @@
 import prisma from "@/app/lib/prisma";
 import bcrypt from "bcryptjs";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../[...nextauth]/route";
+
+export const getUserSessionServer = async () => {
+      const session = await getServerSession(authOptions);
+      console.log("USUARIO: ",session?.user);
+      return session?.user;
+};
 
 export const signInEmailPassword = async (email: string, password: string) => {
     if(!email || !password) return null;
 
-    const user = await prisma.user.findUnique({where: {email: email}})
+    const user = await prisma.user.findUnique({where: {email: email}});
 
     if(!user) {
         const dbUser = await createUser(email, password);
